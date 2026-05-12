@@ -1,0 +1,31 @@
+const mongoose = require("mongoose");
+
+const NotificationSchema = new mongoose.Schema(
+  {
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    type: {
+      type: String,
+      enum: [
+        // Task
+        "task_assigned", "response_received", "task_reminder",
+        "status_changed", "approval_requested", "task_approved", "task_rejected",
+        // Template
+        "template_approval_requested", "template_approved", "template_rejected",
+        // Campaign
+        "campaign_approval_requested", "campaign_approved", "campaign_rejected",
+        // Contact
+        "contact_approval_requested", "contact_approved", "contact_rejected",
+      ],
+      required: true,
+    },
+    message:    { type: String, required: true },
+    taskId:     { type: mongoose.Schema.Types.ObjectId, ref: "Task",     default: null },
+    templateId: { type: mongoose.Schema.Types.ObjectId, ref: "Template", default: null },
+    campaignId: { type: mongoose.Schema.Types.ObjectId, ref: "Campaign", default: null },
+    contactId:  { type: mongoose.Schema.Types.ObjectId, ref: "Contact",  default: null },
+    read:       { type: Boolean, default: false },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("Notification", NotificationSchema);
