@@ -7,6 +7,14 @@ let io;
 const onlineUsers = new Map();
 const lastSeenMap = {};
 
+const getPhoneRooms = (phone) => {
+  const raw = String(phone || "").trim();
+  const digits = raw.replace(/\D/g, "");
+  const last10 = digits.length > 10 ? digits.slice(-10) : digits;
+
+  return Array.from(new Set([raw, digits, last10].filter(Boolean)));
+};
+
 const initSocket = (server) => {
   io = new Server(server, {
     cors: { origin: "*" },
@@ -30,7 +38,7 @@ const initSocket = (server) => {
       if (socket.userPhone === userPhone) return;
 
       socket.userPhone = userPhone;
-      socket.join(userPhone);
+      getPhoneRooms(userPhone).forEach(room => socket.join(room));
 
       let userSockets = onlineUsers.get(userPhone);
 
@@ -53,6 +61,7 @@ const initSocket = (server) => {
       const userSockets = onlineUsers.get(userPhone);
       if (!userSockets) return;
 
+      getPhoneRooms(userPhone).forEach(room => socket.leave(room));
       userSockets.delete(socket.id);
 
       if (userSockets.size === 0) {
@@ -94,7 +103,14 @@ const initSocket = (server) => {
     socket.on("call:offer", ({ to, from, fromName, chatId, offer, callType }) => {
       if (!to || !from || !offer) return;
 
-      io.to(to).emit("call:incoming", {
+      console.log("[call:offer]", {
+        from,
+        to,
+        chatId,
+        recipientSockets: onlineUsers.get(to)?.size || 0,
+      });
+
+      io.to(getPhoneRooms(to)).emit("call:incoming", {
         from,
         fromName,
         chatId,
@@ -106,7 +122,14 @@ const initSocket = (server) => {
     socket.on("call:answer", ({ to, from, chatId, answer }) => {
       if (!to || !from || !answer) return;
 
-      io.to(to).emit("call:answered", {
+      console.log("[call:answer]", {
+        from,
+        to,
+        chatId,
+        recipientSockets: onlineUsers.get(to)?.size || 0,
+      });
+
+      io.to(getPhoneRooms(to)).emit("call:answered", {
         from,
         chatId,
         answer,
@@ -116,7 +139,16 @@ const initSocket = (server) => {
     socket.on("call:ice-candidate", ({ to, from, chatId, candidate }) => {
       if (!to || !from || !candidate) return;
 
-      io.to(to).emit("call:ice-candidate", {
+      console.log("[call:ice-candidate]", {
+        from,
+        to,
+        chatId,
+        type: candidate.type,
+        protocol: candidate.protocol,
+        recipientSockets: onlineUsers.get(to)?.size || 0,
+      });
+
+      io.to(getPhoneRooms(to)).emit("call:ice-candidate", {
         from,
         chatId,
         candidate,
@@ -126,7 +158,7 @@ const initSocket = (server) => {
     socket.on("call:reject", ({ to, from, chatId, reason }) => {
       if (!to || !from) return;
 
-      io.to(to).emit("call:rejected", {
+      io.to(getPhoneRooms(to)).emit("call:rejected", {
         from,
         chatId,
         reason: reason || "rejected",
@@ -136,7 +168,7 @@ const initSocket = (server) => {
     socket.on("call:busy", ({ to, from, chatId }) => {
       if (!to || !from) return;
 
-      io.to(to).emit("call:busy", {
+      io.to(getPhoneRooms(to)).emit("call:busy", {
         from,
         chatId,
       });
@@ -145,7 +177,7 @@ const initSocket = (server) => {
     socket.on("call:end", ({ to, from, chatId, reason }) => {
       if (!to || !from) return;
 
-      io.to(to).emit("call:ended", {
+      io.to(getPhoneRooms(to)).emit("call:ended", {
         from,
         chatId,
         reason: reason || "ended",
