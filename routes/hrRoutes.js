@@ -300,6 +300,7 @@ async function buildPayrollForStaff(staff, period, generatedBy, existingPayroll 
 
   const workingDays = salaryBasis === "hourly" ? periodDates.length : periodDates.filter((date) => !date.isOff).length;
   const paidOffDays = periodDates.length - workingDays;
+  const salaryDays = salaryBasis === "monthly" ? periodDates.length : workingDays;
   const attendance = await HRAttendance.find({
     staff: staff._id,
     date: { $gte: effectiveStart, $lt: attendanceEnd },
@@ -361,7 +362,7 @@ async function buildPayrollForStaff(staff, period, generatedBy, existingPayroll 
   const expectedWorkHours = money(
     salaryBasis === "hourly"
       ? payableWorkHours
-      : workingDays * expectedHoursPerDay
+      : salaryDays * expectedHoursPerDay
   );
   const baseSalary = money(
     salaryBasis === "hourly"
@@ -370,7 +371,7 @@ async function buildPayrollForStaff(staff, period, generatedBy, existingPayroll 
         ? salaryAmount * workingDays
         : salaryAmount
   );
-  const dailyRate = workingDays > 0 ? money(baseSalary / workingDays) : 0;
+  const dailyRate = salaryDays > 0 ? money(baseSalary / salaryDays) : 0;
   const hourlyRate = money(
     salaryBasis === "hourly"
       ? salaryAmount
