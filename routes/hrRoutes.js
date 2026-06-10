@@ -389,7 +389,7 @@ async function buildPayrollForStaff(staff, period, generatedBy, existingPayroll 
   const absentDays = absentMarkedDays;
   const cameDays = presentDays + halfDays + shortLeaveDays;
   const salaryAmount = money(staff.monthlySalary);
-  const monthlyDailyRate = workingDays > 0 ? money(salaryAmount / workingDays) : 0;
+  const monthlyDailyRate = salaryDays > 0 ? money(salaryAmount / salaryDays) : 0;
   const payableMarkedDays = money(
     presentDays
     + (halfDays * 0.5)
