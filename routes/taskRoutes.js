@@ -726,7 +726,11 @@ router.get("/user-statuses", protect, async (req, res) => {
     const userRole = req.user.role;
 
     let taskFilter = {};
-    if (userRole !== "super_admin") {
+    if (userRole === "manager") {
+      taskFilter = {
+        $or: [{ createdBy: userId }, { assignedTo: userId }],
+      };
+    } else if (userRole !== "super_admin") {
       taskFilter = { assignedTo: userId };
     }
     const visibleTaskIds = (await Task.find(taskFilter).select("_id").lean())
@@ -752,8 +756,9 @@ router.patch("/:id/user-status", protect, async (req, res) => {
     if (!task) return res.status(404).json({ error: "Task not found" });
 
     const isAssignee = task.assignedTo.some(a => a.toString() === req.user.id);
-    if (!isAssignee && req.user.role !== "super_admin")
-      return res.status(403).json({ error: "Not assigned" });
+    const isCreator = task.createdBy.toString() === req.user.id;
+    if (!isAssignee && !isCreator && req.user.role !== "super_admin")
+      return res.status(403).json({ error: "Not authorized" });
 
     const { status } = req.body;
     const valid = ["pending", "in_progress", "completed", "cancelled"];
