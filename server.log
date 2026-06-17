@@ -1,0 +1,145 @@
+
+> backend@1.0.0 start
+> node server.js
+
+[dotenv@17.3.1] injecting env (14) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+BOOTING SERVER FILE: C:\Users\Lakshya\Desktop\whatsapp-clone\backend\server.js
+DEPLOY VERSION: 2026-06-10-hr-deploy-check-v2
+Server running on port 5000
+✅ MongoDB Connected: ac-hj49d7t-shard-00-02.qcpdctp.mongodb.net
+REQ HIT: OPTIONS /api/notifications
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: OPTIONS /api/notifications
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/notifications
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: GET /api/health
+User connected: gzxhiRDpSxQ5dJ2ZAAAB
+REQ HIT: GET /api/notifications
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/users/login
+REQ HIT: POST /api/users/login
+REQ HIT: OPTIONS /api/notifications
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: OPTIONS /api/notifications
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/notifications
+REQ HIT: GET /api/users/support-tickets
+User connected: iqsFB5jTPgfSk6wKAAAD
+REQ HIT: GET /api/notifications
+User connected: NpojNrVnw7198eEjAAAF
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: GET /api/notifications
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: GET /api/notifications
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/notifications
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: OPTIONS /api/notifications
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/notifications
+REQ HIT: GET /api/users/support-tickets
+User connected: IyKRl_uROlTaUWjmAAAH
+REQ HIT: GET /api/notifications
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/hr/me
+REQ HIT: OPTIONS /api/hr/me
+REQ HIT: GET /api/hr/me
+REQ HIT: GET /api/hr/me
+REQ HIT: OPTIONS /api/hr/me?month=2026-06
+REQ HIT: GET /api/hr/me?month=2026-06
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: GET /api/hr/me
+REQ HIT: GET /api/notifications
+REQ HIT: GET /api/users/support-tickets
+User connected: wVCemLzrPDegtnfPAAAJ
+REQ HIT: GET /api/notifications
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: GET /api/hr/me
+REQ HIT: GET /api/hr/me
+REQ HIT: GET /api/hr/me?month=2026-06
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/contacts
+REQ HIT: OPTIONS /api/tags
+REQ HIT: OPTIONS /api/chats
+REQ HIT: OPTIONS /api/tags
+REQ HIT: GET /api/contacts
+REQ HIT: OPTIONS /api/chats
+REQ HIT: GET /api/tags
+REQ HIT: GET /api/chats
+REQ HIT: GET /api/contacts
+REQ HIT: GET /api/tags
+REQ HIT: GET /api/chats
+REQ HIT: OPTIONS /api/messages/mark-read
+REQ HIT: OPTIONS /api/messages?chatId=6a2aaff622d4ed6bcc9cead1
+REQ HIT: POST /api/messages/mark-read
+REQ HIT: GET /api/messages?chatId=6a2aaff622d4ed6bcc9cead1
+REQ HIT: OPTIONS /api/messages
+REQ HIT: POST /api/messages
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/users
+REQ HIT: OPTIONS /api/users
+REQ HIT: OPTIONS /api/tasks
+REQ HIT: OPTIONS /api/tasks/notifications
+REQ HIT: OPTIONS /api/tasks/user-statuses
+REQ HIT: GET /api/users
+REQ HIT: GET /api/tasks
+REQ HIT: GET /api/tasks/notifications
+REQ HIT: GET /api/tasks/user-statuses
+REQ HIT: GET /api/users
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/hr/me
+REQ HIT: GET /api/hr/me
+REQ HIT: OPTIONS /api/notifications
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: OPTIONS /api/notifications
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/notifications
+REQ HIT: GET /api/users/support-tickets
+User connected: 4gO1Sn64jLvXe8wFAAAL
+REQ HIT: GET /api/notifications
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: GET /api/hr/me
+REQ HIT: GET /api/hr/me
+REQ HIT: OPTIONS /api/hr/me?month=2026-06
+REQ HIT: GET /api/hr/me?month=2026-06
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/hr/me
+REQ HIT: GET /api/hr/me
+REQ HIT: OPTIONS /api/notifications
+REQ HIT: OPTIONS /api/notifications
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: GET /api/notifications
+User connected: 2G98-JoZMxaeY1PcAAAN
+REQ HIT: GET /api/notifications
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: GET /api/hr/me
+REQ HIT: GET /api/hr/me
+REQ HIT: OPTIONS /api/hr/me?month=2026-06
+REQ HIT: GET /api/hr/me?month=2026-06
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: OPTIONS /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
+REQ HIT: GET /api/users/support-tickets
