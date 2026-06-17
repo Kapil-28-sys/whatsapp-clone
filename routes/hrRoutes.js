@@ -671,22 +671,30 @@ router.get("/me", allowRoles("super_admin", "manager", "user"), async (req, res)
       $lt: new Date(Date.UTC(year, monthIndex + 1, 1)),
     };
 
-    const [attendance, payrolls, storedTransactions] = await Promise.all([
+    const [attendance, payrolls] = await Promise.all([
       HRAttendance.find(attendanceFilter).sort({ date: -1, createdAt: -1 }),
       populatePayroll(HRPayroll.find({ staff: staff._id }).limit(120)),
-      HRBankTransaction.find({ staff: staff._id, paidAt: transactionDateFilter })
-        .populate("bank")
-        .populate("staff")
-        .populate("department")
-        .populate("loan")
-        .populate({ path: "payroll", populate: [{ path: "loanDeductions.loan" }] })
-        .populate("loanDeductions.loan")
-        .sort({ paidAt: -1, createdAt: -1 })
-        .lean(),
     ]);
     const visiblePayrolls = payrolls.filter((payroll) => (
       (payroll.periodStart || payroll.periodEnd || payroll.month || "").slice(0, 7) === month
     ));
+    const visiblePayrollIds = visiblePayrolls.map((payroll) => payroll._id).filter(Boolean);
+    const transactionFilter = {
+      staff: staff._id,
+      $or: [
+        { paidAt: transactionDateFilter },
+        ...(visiblePayrollIds.length ? [{ payroll: { $in: visiblePayrollIds } }] : []),
+      ],
+    };
+    const storedTransactions = await HRBankTransaction.find(transactionFilter)
+      .populate("bank")
+      .populate("staff")
+      .populate("department")
+      .populate("loan")
+      .populate({ path: "payroll", populate: [{ path: "loanDeductions.loan" }] })
+      .populate("loanDeductions.loan")
+      .sort({ paidAt: -1, createdAt: -1 })
+      .lean();
     const storedPaymentIds = new Set(
       storedTransactions
         .map((transaction) => transaction.paymentHistoryId?.toString())
@@ -697,11 +705,6 @@ router.get("/me", allowRoles("super_admin", "manager", "user"), async (req, res)
       return (payroll.paymentHistory || [])
         .map((payment, index) => ({ payment, index }))
         .filter(({ payment }) => !storedPaymentIds.has(payment._id?.toString()))
-        .filter(({ payment }) => {
-          if (!payment.paidAt) return false;
-          const paidAt = new Date(payment.paidAt);
-          return paidAt >= transactionDateFilter.$gte && paidAt < transactionDateFilter.$lt;
-        })
         .map(({ payment, index }) => {
           const loanDeduction = index === 0 ? money(payroll.loanDeduction) : 0;
           return {
